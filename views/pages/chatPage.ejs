@@ -1,0 +1,130 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/chatPage.css">
+</head>
+
+<body>
+    <div id="container">
+
+        <div id="wrapper-1">
+            <div id="logged-user">
+                <img src="/<%= user.image%>" alt="image">
+                <h1 id="mainUsername" ns="<%= user.endpoint %>"><%= user.username %></h1>
+            </div>
+            <div id="search-bar">
+                <img src="/img/search-icon.png" alt="image">
+                <input type="text" name="search-text" placeholder="Search Friends..."
+                    v-on:keyup.enter="SearchFriends($event)" v-model="searchString">
+            </div>
+            <div id="friends">
+                <ul class="friend-list" v-show="TabType==0">
+
+                    <div v-for="friend in friends">
+                        <Friend :friend="friend" ref="friends" @select="SelectFriend" :selected-friend="selectedFriend">
+                        </Friend>
+                    </div>
+                    <!-- <li class="friendTemplate hover">
+                        <div class="avatar">
+                            <img :src="friend.image" alt="img">
+                            <div class="status" v-bind:class="{ online: GetOnlineStatus(friend.endpoint)}"></div>
+                        </div>
+                        <div class="friend-detail">
+                            <h1>{{friend.username}}</h1>
+                            <p>Game Developer</p>
+                        </div>
+                        <p class="friend-last-time-stamp">&nbsp;
+                            10:30 Note:: Timming ka baad me karna hai!!
+                        </p>
+                    </li> -->
+                </ul>
+
+                <div class="manage-friend-list" v-show="TabType==1">
+                    <ul>
+                        <div v-for="searchedFriend in FriendSearchResult">
+                            <Searched-Friend :searched-friend="searchedFriend"></Searched-Friend>
+                        </div>
+
+                        <div v-show="searchString==''">
+                            <div id=" sent-requests">
+                                <h6>sent requests</h6>
+                                <ul>
+                                    <div v-for="sentRequest in SentFriendRequest">
+                                        <Sent-Friend :friend-request="sentRequest"></Sent-Friend>
+                                        <!-- <li class="friendTemplate">
+                                            <div class="avatar">
+                                                <img :src="'/'+sentRequest.image" alt="img">
+                                            </div>
+                                            <div class="friend-detail">
+                                                <h1>{{sentRequest.username}}</h1>
+                                            </div>
+                                            <button class="round-button">Accept</button>
+                                            <button>cancel</button>
+                                        </li> -->
+                                    </div>
+                                </ul>
+                            </div>
+                            <div id="received-requests">
+                                <h6>received requests</h6>
+                                <ul>
+                                    <div v-for="receivedRequest in ReceivedFriendRequest">
+                                        <Received-Friend :friend-request="receivedRequest"></Received-Friend>
+                                        <!-- <li class="friendTemplate">
+                                            <div class="avatar">
+                                                <img :src="'/'+receivedRequest.image" alt="img">
+                                                <div class="status online"></div>
+                                            </div>
+                                            <div class="friend-detail">
+                                                <h1>{{receivedRequest.username}}</h1>
+                                            </div>
+                                            <button class="round-button">Accept</button>
+                                            <button>cancel</button>
+                                        </li> -->
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </ul>
+                </div>
+
+                <div class="SettingsTab" v-show="TabType==2">
+                    <h1>Setting Tab</h1>
+                </div>
+
+
+            </div>
+            <div id="manage-user">
+                <button @click="SetTabType(0)" v-if="TabType!=0">Go Back</button>
+                <button @click="SetTabType(1)" v-if="TabType==0">Manage Friends</button>
+                <button @click="SetTabType(2)" v-if="TabType==0">Settings</button>
+            </div>
+        </div>
+
+        <div id="wrapper-2">
+            <div id="selected-user">
+                <img :src="[ selectedFriend == null ? 'img/img1.png' : selectedFriend.image]" alt="image">
+                <h1>{{selectedFriend == null? "username":selectedFriend.username}}</h1>
+            </div>
+            <div id="chat-view">
+                <div id="messages">
+                    <div v-for="chat in chats">
+                        <Chat :chat="chat" :my-endpoint="myEndpoint"></Chat>
+                    </div>
+                </div>
+            </div>
+            <div id="input-view">
+                <input type="text" name="input-msg" id="input-msg" v-on:keyup.enter="SendMessage">
+                <button @click="SendMessage">send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/htmlTemplate.js"></script>
+    <script src="/js/clientSocket.js"></script>
+    <script src="/js/main.js"></script>
+
+
+
+    <%- include('../includes/end.ejs') %>

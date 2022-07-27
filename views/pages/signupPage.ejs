@@ -1,0 +1,24 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/signupPage.css">
+</head>
+
+<body>
+
+    <div class="login-box">
+        <form action="/signupUser" method="POST" enctype="multipart/form-data">
+            <h1>Register Here</h1>
+            <img src="/img/img1.png" class="avatar" alt="Upload Profile" />
+            <input type="file" id="image" name='image'>
+            <p>Username</p>
+            <input type="text" name="username" placeholder="Enter Username" required>
+            <p>Email</p>
+            <input class="email" type="email" name="email" placeholder="Enter Email" required>
+            <p>Password</p>
+            <input type="password" name="password" placeholder="Enter Password" required>
+            <p>Confirm Password</p>
+            <input type="password" name="confirm-password" placeholder="Confirm Password" required>
+            <input class="signup" type="submit" value="Sign Up">
+        </form>
+    </div>
+
+    <%- include('../includes/end.ejs') %>

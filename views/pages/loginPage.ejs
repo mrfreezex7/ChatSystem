@@ -1,0 +1,22 @@
+<%- include('../includes/head.ejs') %>
+
+<link rel="stylesheet" href="/css/loginPage.css">
+</head>
+
+<body>
+
+    <div class="login-box">
+        <img src="/img/img1.png" class="avatar">
+        <h1>Login Here</h1>
+        <form action="/logIn" method="POST">
+            <p>Username</p>
+            <input type="text" name="username" placeholder="Enter Username" required>
+            <p>Password</p>
+            <input type="password" name="password" placeholder="Enter Password" required>
+            <input type="submit" name="" value="Login">
+            <a href="#">Forgot Password?</a>
+            <a href="/signupPage">Create a New Account</a>
+        </form>
+    </div>
+
+    <%- include('../includes/end.ejs') %>
