@@ -7,6 +7,7 @@ const shortid = require("shortid");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const socketio = require("socket.io");
+const fs = require("node:fs");
 
 const Users = require("./models/user");
 const Friends = require("./models/friend");
@@ -22,6 +23,15 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 
 const mongoConnect = require("./utility/database").mongoConnect;
+
+fs.exists("./images", (exists) => {
+  console.log(exists, "yes");
+  if (!exists) {
+    fs.mkdirSync(path.join(__dirname, "images"));
+  } else {
+    console.log("images directory exists");
+  }
+});
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
