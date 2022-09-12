@@ -20,7 +20,7 @@ function JoinUser(endpoint) {
   if (userSocket) {
     userSocket.close();
   }
-  userSocket = io(`localhost:7777/${endpoint}`, {
+  userSocket = io(`localhost:8888/${endpoint}`, {
     query: {
       username,
     },

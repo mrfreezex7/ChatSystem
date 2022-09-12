@@ -77,9 +77,9 @@ app.use(Routes);
 app.use(errorController.get404Page);
 
 mongoConnect(() => {
-  const expressServer = app.listen(7777);
+  const expressServer = app.listen(8888);
   const io = socketio(expressServer);
-  console.log("Express and Socket Server Started on Port 7777");
+  console.log("Express and Socket Server Started on Port 8888");
   ListningOnSocket(io);
   ListningOnEndpoint(io);
 });
